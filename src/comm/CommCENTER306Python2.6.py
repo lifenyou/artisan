@@ -22,12 +22,12 @@ def main():
     T2 = 0.0
     delay = 2            # set time between each reading in seconds
 
-    print "Press <CTRL 'C'> to stop"
+    print( "Press <CTRL 'C'> to stop")
     #Read temperature in a forever loop to check operation    
     while True:    
         T1,T2 = temperature()                               # read T1,T2
         string = "T1 = %.1f T2 = %.1f"%(T1,T2)              # format output string
-        print string
+        print (string)
         time.sleep(delay)                                   # wait delay before next reading in while loop
 
 
@@ -80,10 +80,12 @@ def temperature():
         
         else:
             l = len(r)
-            print "received only %i bytes, but needed 10"%l
+            print ("received only %i bytes, but needed 10"%l)
     
-    except serial.SerialException, e:
-        print "Serial port error" + str(e)
+    except serial.SerialException as e:
+        print( "Serial port error" + str(e))
+
+
         
     finally:
         if serCENTER:

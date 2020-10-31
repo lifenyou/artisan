@@ -380,6 +380,7 @@ class modbusport(object):
 
     # function 15 (Write Multiple Coils)
     def writeCoils(self,slave,register,values):
+        print('writeCoils', register, values)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)
@@ -399,6 +400,7 @@ class modbusport(object):
                 
     # function 5 (Write Single Coil)
     def writeCoil(self,slave,register,value):
+        print('writeCoil', register, value)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)
@@ -417,6 +419,7 @@ class modbusport(object):
     # write value to register on slave (function 6 for int or function 16 for float)
     # value can be one of string (containing an int or float), an int or a float
     def writeRegister(self,slave,register,value):
+        print('writeRegister', register, value)
         if stringp(value):
             if "." in value:
                 self.writeWord(slave,register,value)
@@ -429,6 +432,7 @@ class modbusport(object):
 
     # function 6 (Write Single Holding Register)
     def writeSingleRegister(self,slave,register,value):
+        print('writeSingleRegister', register, value)
 #        _logger.debug("writeSingleRegister(%d,%d,%d)" % (slave,register,value))
         try:
             #### lock shared resources #####
@@ -452,6 +456,7 @@ class modbusport(object):
     # bits to be modified are "masked" with a 0 in the and_mask (not and_mask)
     # new bit values to be written are taken from the or_mask
     def maskWriteRegister(self,slave,register,and_mask,or_mask):
+        print('maskWriteRegister', register, and_mask, or_mask)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)
@@ -473,12 +478,14 @@ class modbusport(object):
     # the masks are evaluated locally on the given integer value and the result is send via
     # using function 6
     def localMaskWriteRegister(self,slave,register,and_mask,or_mask,value):
+        print('localMaskWriteRegister', register, and_mask, or_mask )
         new_val = (int(round(value)) & and_mask) | (or_mask & (and_mask ^ 0xFFFF))
         self.writeSingleRegister(slave,register,int(new_val))
             
     # function 16 (Write Multiple Holding Registers)
     # values is a list of integers or one integer
     def writeRegisters(self,slave,register,values):
+        print('writeRegisters', register, values)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)
@@ -499,6 +506,7 @@ class modbusport(object):
     # value=int or float
     # writes a single precision 32bit float (2-registers)
     def writeWord(self,slave,register,value):
+        print('writeWord', register, value)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)
@@ -519,6 +527,7 @@ class modbusport(object):
 
     # translates given int value int a 16bit BCD and writes it into one register
     def writeBCD(self,slave,register,value):
+        print('writeBCD', register, value)
         try:
             #### lock shared resources #####
             self.COMsemaphore.acquire(1)

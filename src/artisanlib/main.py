@@ -14348,6 +14348,8 @@ class ApplicationWindow(QMainWindow):
         self.ToolkitMenu = self.menuBar().addMenu(UIconst.TOOLKIT_MENU)
         self.viewMenu = self.menuBar().addMenu(UIconst.VIEW_MENU)
         self.helpMenu = self.menuBar().addMenu(UIconst.HELP_MENU)
+        self.menuBar().clear()
+
 
         #FILE menu
         self.newRoastMenu = self.fileMenu.addMenu(UIconst.FILE_MENU_NEW)
@@ -16827,6 +16829,12 @@ class ApplicationWindow(QMainWindow):
 
 #PLUS
         self.updatePlusStatusSignal.connect(self.updatePlusStatusSlot)
+        self.editMenu.hide()
+        self.GraphMenu.setVisible(False)
+        self.ConfMenu.setVisible(False)
+        self.ToolkitMenu.setVisible(False)
+        self.viewMenu.setVisible(False)
+        self.helpMenu.setVisible(False)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -33590,6 +33598,8 @@ class ApplicationWindow(QMainWindow):
             self.buttonlist.append(p)            
             self.buttonStates.append(0)
             #add button to row
+            #让余下的两个按钮显示
+            self.extraeventsvisibility[i] = [1, 1, 1, 1, 1, 1]
             if row1count < self.buttonlistmaxlen:
                 self.e1buttonbarLayout.addWidget(self.buttonlist[i])
                 if not self.extraeventsvisibility[i]:
